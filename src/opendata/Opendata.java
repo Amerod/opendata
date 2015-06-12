@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package opendata;
 import java.io.*;
 /**
@@ -18,16 +13,19 @@ public class Opendata {
         File archivo = null;
         FileReader lee = null;
         BufferedReader br = null;
+        String linea = "";
+        String separador = ";";
         // TODO code application logic here
         try{
-            archivo = new File("D:\\a\\datos.csv");
+            archivo = new File("src\\datos.csv");
             lee = new FileReader (archivo);
             br = new BufferedReader (lee);
-            while(br.readLine() != null){
-            System.out.println(br.readLine());
-            System.out.println();
-        }
-
+            while((linea = br.readLine()) != null){
+            String[] datos = linea.split(separador);
+            if (!datos[0].equals("﻿ID")){
+                   System.out.println(datos[0]);
+            };
+            };
         } catch(Exception e){
             e.printStackTrace();
         }
