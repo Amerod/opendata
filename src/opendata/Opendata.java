@@ -20,24 +20,24 @@ public class Opendata {
         BufferedReader br = null;
         // TODO code application logic here
         try{
-        archivo = new File("D:\\a\\datos.csv");
-        lee = new FileReader (archivo);
-        br = new BufferedReader (lee);
-        while(br.readLine() != null){
-        System.out.println(br.readLine());
-        System.out.println();
+            archivo = new File("D:\\a\\datos.csv");
+            lee = new FileReader (archivo);
+            br = new BufferedReader (lee);
+            while(br.readLine() != null){
+            System.out.println(br.readLine());
+            System.out.println();
         }
 
         } catch(Exception e){
             e.printStackTrace();
         }
         finally{
-        try{
-            lee.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+            try{
+                lee.close();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
     
