@@ -13,19 +13,22 @@ public class Opendata {
         String[] datos = null;
         Agenda entrada = null;
         try{
-            linea = br.readLine();
-            datos = linea.split(separador);
-            if (datos[0].equals("﻿ID")){
-               linea = br.readLine();
-               datos = linea.split(separador);
-            };
-            entrada = new Agenda(datos);
-        } catch(Exception e){
+            
+                
+            if ((linea = br.readLine()) != null){
+                datos = linea.split(separador);     
+                if (datos[0].equals("﻿ID")){
+                   linea = br.readLine();
+                   datos = linea.split(separador);
+                };
+                entrada = new Agenda(datos);
+            }
+        }catch(Exception e){
             e.printStackTrace();
         }finally{
             return entrada;
         }
-    };
+    }
     
     public static void mostrar_entrada(Agenda entrada){
        // System.out.println("-- Datos de la entrada -- ");
@@ -44,14 +47,18 @@ public class Opendata {
         File archivo = null;
         FileReader lee = null;
         BufferedReader br = null;
+        
         try{
+            
         archivo = new File("src\\datos.csv");
         lee = new FileReader(archivo);
         br = new BufferedReader (lee);
+        
         Agenda entrada = crear_entrada(br);
+        
         while (entrada != null){
-        mostrar_entrada(entrada); 
-        entrada = crear_entrada(br);
+            mostrar_entrada(entrada);
+            entrada = crear_entrada(br);
         }
         }catch(Exception e){
             e.printStackTrace();
