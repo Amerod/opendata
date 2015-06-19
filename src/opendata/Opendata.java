@@ -1,6 +1,6 @@
 package opendata;
 import java.io.*;
-import opendata.modelo.Agenda;
+import modelo.*;
 /**
  *
  * @author andres
@@ -12,9 +12,7 @@ public class Opendata {
         String separador = ";";
         String[] datos = null;
         Agenda entrada = null;
-        try{
-            
-                
+        try{    
             if ((linea = br.readLine()) != null){
                 datos = linea.split(separador);     
                 if (datos[0].equals("﻿ID")){
@@ -30,16 +28,17 @@ public class Opendata {
         }
     }
     
-    public static void mostrar_entrada(Agenda entrada){
-       // System.out.println("-- Datos de la entrada -- ");
+   /* public static void mostrar_entrada(Agenda entrada){
+        System.out.println("-- Datos de la entrada -- ");
         System.out.println("ID : "+entrada.getID());
-      /*  System.out.println("Nombre : "+entrada.getActe());
+        System.out.println("Nombre : "+entrada.getActe());
         System.out.println("Descripcion : "+entrada.getDescripcio());
         System.out.println("Lugar : "+entrada.getLloc());
         System.out.println("Fecha : "+entrada.getData_ini());
         System.out.println("Distrito : "+entrada.getDistricte());
-        System.out.println("URL : "+entrada.getURL());*/
-    };
+        System.out.println("URL : "+entrada.getURL()); 
+    };*/
+    
     /**
      * @param args the command line arguments
      */
@@ -47,7 +46,7 @@ public class Opendata {
         File archivo = null;
         FileReader lee = null;
         BufferedReader br = null;
-        
+        AgendaDAO dao = new AgendaDAO();
         try{
             
         archivo = new File("src\\datos.csv");
@@ -57,7 +56,8 @@ public class Opendata {
         Agenda entrada = crear_entrada(br);
         
         while (entrada != null){
-            mostrar_entrada(entrada);
+            System.out.println(entrada.getID());
+            System.out.println(dao.insertAgenda(entrada));
             entrada = crear_entrada(br);
         }
         }catch(Exception e){
