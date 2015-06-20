@@ -7,18 +7,7 @@ import controlador.ControladorAgenda;
  * @author andres
  */
 public class Opendata {
-    
-   /* public static void mostrar_entrada(Agenda entrada){
-        System.out.println("-- Datos de la entrada -- ");
-        System.out.println("ID : "+entrada.getID());
-        System.out.println("Nombre : "+entrada.getActe());
-        System.out.println("Descripcion : "+entrada.getDescripcio());
-        System.out.println("Lugar : "+entrada.getLloc());
-        System.out.println("Fecha : "+entrada.getData_ini());
-        System.out.println("Distrito : "+entrada.getDistricte());
-        System.out.println("URL : "+entrada.getURL()); 
-    };*/
-    
+
     /**
      * @param args the command line arguments
      */
