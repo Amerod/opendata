@@ -15,6 +15,8 @@ public class AgendaDAO {
         public AgendaDAO(){
             conexion = new Conexion();
         }
+               
+
         
         public String insertAgenda(Agenda entrada){
         String rptaRegistro=null;
