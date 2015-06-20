@@ -116,9 +116,10 @@ public class AgendaDAO {
             Connection accesoDB = conexion.getConexion();
             Statement ps = accesoDB.createStatement();
             ps.executeUpdate("create table "+nombre+" like agenda;");
-            rptaRegistro ="bien";
+            ps.executeUpdate("insert into "+nombre+" select * from agenda;");
+            rptaRegistro ="Se ha creado correctamente.";
         }catch(Exception e){
-            rptaRegistro = "algo fue mal :/";
+            rptaRegistro = "algo fue mal.";
         }
         return rptaRegistro;
         }
@@ -157,8 +158,7 @@ public class AgendaDAO {
                 Agenda entrada = crear_entrada(br);
 
                 while (entrada != null){
-                    System.out.println(entrada.getID());
-                    System.out.println(insertAgenda(entrada));
+                    insertAgenda(entrada);
                     entrada = crear_entrada(br);
                 }
                 lee.close();

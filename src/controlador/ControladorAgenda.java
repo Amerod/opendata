@@ -47,11 +47,11 @@ public class ControladorAgenda implements ActionListener{
         }
         if (e.getSource()==vistaAgenda.btnNueva){
             if(!vistaAgenda.txtNueva.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Crear nueva tabla");
+            JOptionPane.showMessageDialog(null, "Guardar copia");
             String rptaRegistro = modeloAgenda.nuevaTabla(vistaAgenda.txtNueva.getText());
             this.LlenarTabla(vistaAgenda.Tabla1);
             JOptionPane.showMessageDialog(null, rptaRegistro);}
-            else{JOptionPane.showMessageDialog(null, "Inserta un nombre.");}
+            else{JOptionPane.showMessageDialog(null, "Inserta un nombre para la copia.");}
         }
     }
 
