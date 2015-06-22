@@ -14,8 +14,10 @@ public class Agenda {
     int ID;
     String acte;
     String descripcio;
+    String web_acte;
     String lloc;
     String data_ini;
+    String data_fi;
     String districte;
     String URL;
 
@@ -23,10 +25,28 @@ public class Agenda {
         this.ID = Integer.parseInt(datos[0]);
         this.acte = datos[1];
         this.descripcio = datos[2];
+        this.web_acte = datos[4];
         this.lloc = datos[6];
         this.data_ini = datos[7];
+        this.data_fi = datos[8];
         this.districte = datos[14];
         this.URL = datos[26];
+    }
+
+    public String getWeb_acte() {
+        return web_acte;
+    }
+
+    public void setWeb_acte(String web_acte) {
+        this.web_acte = web_acte;
+    }
+    
+    public String getData_fi() {
+        return data_fi;
+    }
+
+    public void setData_fi(String data_fi) {
+        this.data_fi = data_fi;
     }
 
     public int getID() {

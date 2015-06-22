@@ -63,7 +63,15 @@ public class VistaOpendata extends javax.swing.JFrame {
             new String [] {
                 "Tablas"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(Tabla1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

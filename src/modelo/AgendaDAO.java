@@ -47,14 +47,16 @@ public class AgendaDAO {
         String rptaRegistro=null;
         try{
             Connection accesoDB = conexion.getConexion();
-            CallableStatement cs = accesoDB.prepareCall("{call sp_insertAgenda(?,?,?,?,?,?,?)}");
+            CallableStatement cs = accesoDB.prepareCall("{call sp_insertAgenda(?,?,?,?,?,?,?,?,?)}");
             cs.setInt(1, entrada.getID());
             cs.setString(2, entrada.getActe());
             cs.setString(3, entrada.getDescripcio());
-            cs.setString(4, entrada.getLloc());
-            cs.setString(5, entrada.getData_ini());
-            cs.setString(6, entrada.getDistricte());
-            cs.setString(7, entrada.getURL());
+            cs.setString(4, entrada.getWeb_acte());
+            cs.setString(5, entrada.getLloc());
+            cs.setString(6, entrada.getData_ini());
+            cs.setString(7, entrada.getData_fi());
+            cs.setString(8, entrada.getDistricte());
+            cs.setString(9, entrada.getURL());
             
             int numAfectadas = cs.executeUpdate();
             
