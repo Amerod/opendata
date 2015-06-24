@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package controlador;
+import java.awt.Color;
 import java.awt.event.*;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
@@ -22,14 +25,13 @@ public class ControladorAgenda implements ActionListener{
         this.modeloAgenda = modeloAgenda;
         this.vistaAgenda = vistaAgenda;
         this.vistaAgenda.btnActualizar.addActionListener(this);
-        this.vistaAgenda.btnNueva.addActionListener(this);
-        this.vistaAgenda.txtNueva.addActionListener(this);
-        
+        this.vistaAgenda.txtFecha.setText(this.modeloAgenda.consigueFecha(this.vistaAgenda.txtFecha));
     }
+    
     public void LlenarTabla(JTable Tabla){
         DefaultTableModel modeloT = new DefaultTableModel();
         Tabla.setModel(modeloT);
-        modeloT.addColumn("Tablas");
+        modeloT.addColumn("Estados");
         String[] columna = new String[1];
         int numRegistros = modeloAgenda.listPersona().size();
         for (int i = 0; i < numRegistros; i++) {
@@ -37,21 +39,28 @@ public class ControladorAgenda implements ActionListener{
             modeloT.addRow(columna);
         }
     }
-
+    public void iniciarAuto(AgendaDAO dao){
+        Date horaDespertar = new Date(System.currentTimeMillis());
+        Calendar c = Calendar.getInstance();
+        c.setTime(horaDespertar);
+        if (c.get(Calendar.HOUR_OF_DAY)>=8){
+        c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR)+1);}
+        c.set(Calendar.HOUR_OF_DAY, 8);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        horaDespertar = c.getTime();
+        int tiempoRepeticion = 86400000;
+        java.util.Timer temporizador = new java.util.Timer();
+        this.vistaAgenda.txtProximaFecha.setText(String.valueOf(horaDespertar));
+        temporizador.schedule(new Temporizador(dao), horaDespertar, tiempoRepeticion);
+    }
+    
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==vistaAgenda.btnActualizar){
             JOptionPane.showMessageDialog(null, "Actualizar datos");
             String rptaRegistro = modeloAgenda.insertarTodo();
-            this.LlenarTabla(vistaAgenda.Tabla1);
             JOptionPane.showMessageDialog(null, rptaRegistro);
-        }
-        if (e.getSource()==vistaAgenda.btnNueva){
-            if(!vistaAgenda.txtNueva.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Guardar copia");
-            String rptaRegistro = modeloAgenda.nuevaTabla(vistaAgenda.txtNueva.getText());
-            this.LlenarTabla(vistaAgenda.Tabla1);
-            JOptionPane.showMessageDialog(null, rptaRegistro);}
-            else{JOptionPane.showMessageDialog(null, "Inserta un nombre para la copia.");}
+            this.vistaAgenda.txtFecha.setText(this.modeloAgenda.consigueFecha(this.vistaAgenda.txtFecha));
         }
     }
 

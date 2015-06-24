@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package modelo;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +17,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.JLabel;
 /**
  *
  * @author andres
@@ -66,7 +69,24 @@ public class AgendaDAO {
         }catch(Exception e){}
             return rptaRegistro;
         }
-        
+        public String consigueFecha(JLabel label){
+            String fechaViejo = "No hay archivo anterior.";
+            Calendar calendar;
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            try{
+            File archivo = new File("src\\datos.csv");
+            long milliSeconds = archivo.lastModified();
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(milliSeconds);
+            fechaViejo = formatter.format(calendar.getTime());
+            }catch(Exception e){}
+            Calendar c2 = new GregorianCalendar();
+            String hola = formatter.format(c2.getTimeInMillis());
+            if (!fechaViejo.equals(hola)){
+                label.setForeground(Color.RED);
+            }else{label.setForeground(Color.BLACK);}
+            return fechaViejo;
+        }
         public boolean descargar(){
             boolean respuesta = false;
             
@@ -74,7 +94,6 @@ public class AgendaDAO {
                 File archivo = new File("src\\datos.csv");
                 URL url = new URL("http://terrassaopendata.blob.core.windows.net/opendata/2015_AGENDA_ACTIVITATS_CIUTAT_TERRASSA.csv");
                 URLConnection urlCon = url.openConnection();
-                System.out.println(urlCon.getContentType());
                 //Pasar de milisegundos a fecha
                 DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 //Primero con el archivo nuevo
@@ -83,15 +102,12 @@ public class AgendaDAO {
                 calendar.setTimeInMillis(milliSeconds);
                 String fechaNuevo = formatter.format(calendar.getTime());
                 //fin del archivo nuevo
-                System.out.println(fechaNuevo);//mostramos resultado
                 //Ahora con el archivo viejo
                 milliSeconds = archivo.lastModified();
                 calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(milliSeconds);
                 String fechaViejo = formatter.format(calendar.getTime());
                 //Fin del arhivo viejo
-                System.out.println(fechaViejo);//mostramos resultado
-
                 //comparamos si la fecha es la misma no descarga el nuevo archivo
                 if (!fechaViejo.equals(fechaNuevo)){
                     InputStream is = urlCon.getInputStream();

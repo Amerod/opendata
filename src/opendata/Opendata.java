@@ -14,15 +14,12 @@ public class Opendata {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        File archivo = null;
-        FileReader lee = null;
-        BufferedReader br = null;
         AgendaDAO dao = new AgendaDAO();
         VistaOpendata vistaAgenda = new VistaOpendata();
         ControladorAgenda controlador = new ControladorAgenda(dao,vistaAgenda);
         vistaAgenda.setVisible(true);
         vistaAgenda.setLocationRelativeTo(null);
-        controlador.LlenarTabla(vistaAgenda.Tabla1);
+        controlador.iniciarAuto(dao);
     }
     
 }
