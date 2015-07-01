@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package controlador;
-import java.awt.Color;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.*;
@@ -24,14 +27,16 @@ public class ControladorAgenda implements ActionListener{
     public ControladorAgenda(AgendaDAO modeloAgenda,VistaOpendata vistaAgenda){
         this.modeloAgenda = modeloAgenda;
         this.vistaAgenda = vistaAgenda;
-        this.vistaAgenda.btnActualizar.addActionListener(this);
+        this.vistaAgenda.btnDescargar.addActionListener(this);
+        this.vistaAgenda.btnInsertar.addActionListener(this);
+        this.vistaAgenda.btnConectar.addActionListener(this);
         this.vistaAgenda.txtFecha.setText(this.modeloAgenda.consigueFecha(this.vistaAgenda.txtFecha));
     }
     
     public void LlenarTabla(JTable Tabla){
         DefaultTableModel modeloT = new DefaultTableModel();
         Tabla.setModel(modeloT);
-        modeloT.addColumn("Estados");
+        modeloT.addColumn("Tablas");
         String[] columna = new String[1];
         int numRegistros = modeloAgenda.listPersona().size();
         for (int i = 0; i < numRegistros; i++) {
@@ -56,10 +61,39 @@ public class ControladorAgenda implements ActionListener{
     }
     
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==vistaAgenda.btnActualizar){
-            JOptionPane.showMessageDialog(null, "Actualizar datos");
-            String rptaRegistro = modeloAgenda.insertarTodo();
-            JOptionPane.showMessageDialog(null, rptaRegistro);
+        if (e.getSource()== vistaAgenda.btnConectar){
+            if (!(vistaAgenda.txtUserDB.getText().isEmpty())&&!(vistaAgenda.txtNombreBase.getText().isEmpty())){
+                try{
+                        File datosDB = new File("src\\DatosDB.txt");
+                        BufferedWriter bw;
+                        bw = new BufferedWriter(new FileWriter(datosDB));
+                        PrintWriter escribir = new PrintWriter(bw);//para crear el objeto que escribe en el archivo
+                        escribir.println(vistaAgenda.txtUserDB.getText()+","+vistaAgenda.txtPassDB.getText()+","+vistaAgenda.txtNombreBase.getText());//para escribir en el archivo
+                        escribir.flush();
+                        escribir.close();
+                        bw.close();
+                        LlenarTabla(vistaAgenda.jTable1);
+                }
+                catch(Exception a){a.printStackTrace();}
+                JOptionPane.showMessageDialog(null, "Se han guardado los datos.");
+                vistaAgenda.btnDescargar.setEnabled(true);
+                vistaAgenda.btnInsertar.setEnabled(true);
+                           }else{JOptionPane.showMessageDialog(null, "Debes poner un usuario y una base de datos.");}
+        }
+        
+        if(e.getSource()==vistaAgenda.btnInsertar){
+            JOptionPane.showMessageDialog(null, "Insertando nuevos datos.");
+            modeloAgenda.insertarTodo();
+            JOptionPane.showMessageDialog(null, "Datos insertados.");
+        }
+        
+        if (e.getSource()==vistaAgenda.btnDescargar){
+            JOptionPane.showMessageDialog(null, "Descargando nuevos archivos.");
+            boolean rpta = modeloAgenda.descargar();
+            if(rpta){
+                JOptionPane.showMessageDialog(null, "Descargado con exito.");
+            }else{JOptionPane.showMessageDialog(null, "No se ha descargado.");}
+
             this.vistaAgenda.txtFecha.setText(this.modeloAgenda.consigueFecha(this.vistaAgenda.txtFecha));
         }
     }

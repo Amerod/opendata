@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package modelo;
+import java.io.*;
 import java.sql.*;
 /**
  * 
@@ -16,8 +17,14 @@ public class Conexion {
     public Connection getConexion(){
                 Connection con = null;
         try{
+            File archivo = new File("src\\DatosDB.txt");
+            FileReader lee = new FileReader(archivo);
+            BufferedReader br = new BufferedReader(lee);
+            String[] datos;
+            String linea = br.readLine();
+            datos = linea.split(",");
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://localhost/db_agenda","root","123456");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/"+datos[2],datos[0],datos[1]);
         }
         catch(Exception e){
         

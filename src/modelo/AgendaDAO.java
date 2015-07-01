@@ -35,7 +35,7 @@ public class AgendaDAO {
         String tabla;
         try{
             Connection acceDB = conexion.getConexion();
-            PreparedStatement ps = acceDB.prepareStatement("show tables");
+            PreparedStatement ps = acceDB.prepareStatement("show tables;");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 tabla = rs.getNString(1);
@@ -50,17 +50,31 @@ public class AgendaDAO {
         String rptaRegistro=null;
         try{
             Connection accesoDB = conexion.getConexion();
-            CallableStatement cs = accesoDB.prepareCall("{call sp_insertAgenda(?,?,?,?,?,?,?,?,?)}");
-            cs.setInt(1, entrada.getID());
-            cs.setString(2, entrada.getActe());
-            cs.setString(3, entrada.getDescripcio());
-            cs.setString(4, entrada.getWeb_acte());
-            cs.setString(5, entrada.getLloc());
-            cs.setString(6, entrada.getData_ini());
-            cs.setString(7, entrada.getData_fi());
-            cs.setString(8, entrada.getDistricte());
-            cs.setString(9, entrada.getURL());
-            
+            CallableStatement cs = accesoDB.prepareCall("{call sp_insertAgenda(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            System.out.println(entrada.getCicle());
+            cs.setString(1,String.valueOf(entrada.getID()));
+            cs.setString(2,entrada.getActe());
+            cs.setString(3,entrada.getDescripcio());
+            cs.setString(4,entrada.getEmail_acte());
+            cs.setString(5,entrada.getWeb_acte());
+            cs.setString(6,entrada.getA_carrec());
+            cs.setString(7,entrada.getLloc());
+            cs.setString(8,entrada.getData_ini());
+            cs.setString(9,entrada.getData_fi());
+            cs.setString(10,entrada.getGratuit());
+            cs.setString(11,entrada.getPreu());
+            cs.setString(12,entrada.getDistricte());
+            cs.setString(13,entrada.getTipus_acte());
+            cs.setString(14,entrada.getObservacions());
+            cs.setString(15,entrada.getCicle());
+            cs.setString(16,entrada.getDescripcio_cicle());
+            cs.setString(17,entrada.getCicle_data_ini());
+            cs.setString(18,entrada.getCicle_data_fi());
+            cs.setString(19,entrada.getX());
+            cs.setString(20,entrada.getY());
+            cs.setString(21,entrada.getLongitud());
+            cs.setString(22,entrada.getLatitud());
+            cs.setString(23,entrada.getUrl());
             int numAfectadas = cs.executeUpdate();
             
             if (numAfectadas > 0){
@@ -128,13 +142,46 @@ public class AgendaDAO {
                 return respuesta;
         }
         
-        public String nuevaTabla(String nombre){
+        public String nuevaTabla(){
         String rptaRegistro;
         try{
             Connection accesoDB = conexion.getConexion();
             Statement ps = accesoDB.createStatement();
-            ps.executeUpdate("create table "+nombre+" like agenda;");
-            ps.executeUpdate("insert into "+nombre+" select * from agenda;");
+            ps.executeUpdate("create table agenda("+
+            "ID int(8) PRIMARY KEY,"+
+            "acte varchar(200),"+
+            "descripcio varchar(200)," +
+            "email_acte varchar(100)," +
+            "web_acte varchar(100)," +
+            "a_carrec varchar(100)," +
+            "lloc varchar(100)," +
+            "data_ini DATETIME," +
+            "data_fi DATETIME," +
+            "gratuit boolean," +
+            "preu varchar(100)," +
+            "districte varchar(10)," +
+            "tipus_acte varchar(100)," +
+            "observacions varchar(200)," +
+            "cicle varchar(100)," +
+            "descripcio_cicle varchar(200)," +
+            "cicle_data_ini DATETIME," +
+            "cicle_data_fi DATETIME," +
+            "x real," +
+            "y real," +
+            "longitud real," +
+            "latitud real," +
+            "url varchar(100)" +
+            ");" +
+            "drop procedure if exists sp_insertAgenda;" +
+            "drop procedure if exists sp_insertID;" +
+            "drop procedure if exists sp_pasarDatos;" +
+            "delimiter xd " +
+            "	create procedure sp_insertAgenda(in id int(8),in acte varchar(200),in descripcio varchar(200),in web_acte varchar(100),in a_carrec varchar(100),in lloc varchar(100),in data_ini varchar(20),in data_fi varchar(20),in gratuito boolean,in preu varchar(100),in districte varchar(50),in tipus_acte varchar(100),in observacions varchar(200),in cicle varchar(100),in descripcio_cicle varchar(200),in cicle_data_ini DATETIME,in cicle_data_fi DATETIME,in x real,in y real,in longitud real,in latitud real,in url varchar(100))" +
+            "    begin" +
+            "		insert into agenda values(id,acte,descripcio,web_acte,a_carrec,lloc,data_ini,data_fi,gratuito,preu,districte,tipus_acte,observacions,cicle,descripcio_cicle,cicle_data_ini,cicle_data_fi,x,y,longitud,latitud,url);" +
+            "    end;" +
+            "xd" +
+            "delimiter ;");
             rptaRegistro ="Se ha creado correctamente.";
         }catch(Exception e){
             rptaRegistro = "algo fue mal.";
@@ -150,7 +197,7 @@ public class AgendaDAO {
         try{    
             if ((linea = br.readLine()) != null){
                 datos = linea.split(separador);     
-                if (datos[0].equals("﻿ID")){
+                if (datos[1].equals("ACTE")){
                    linea = br.readLine();
                    datos = linea.split(separador);
                 };
@@ -163,12 +210,8 @@ public class AgendaDAO {
         }
     }
         
-        public String insertarTodo(){
-            String respuesta = "No se ha descargado un nuevo archivo.";
+        public void insertarTodo(){
         try{
-            boolean actualizado = descargar();
-            if (actualizado) {
-                respuesta ="Se ha descargado un nuevo archivo.";
                 File archivo = new File("src\\datos.csv");
                 FileReader lee = new FileReader(archivo);
                 BufferedReader br = new BufferedReader (lee);
@@ -176,12 +219,11 @@ public class AgendaDAO {
                 Agenda entrada = crear_entrada(br);
 
                 while (entrada != null){
-                    insertAgenda(entrada);
+                    System.out.println(insertAgenda(entrada));
                     entrada = crear_entrada(br);
+                    
                 }
                 lee.close();
-            }
         }catch(Exception e){e.getStackTrace();}
-        return respuesta;
         }
 }
