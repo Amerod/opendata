@@ -51,7 +51,7 @@ public class AgendaDAO {
         try{
             Connection accesoDB = conexion.getConexion();
             CallableStatement cs = accesoDB.prepareCall("{call sp_insertAgenda(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            System.out.println(entrada.getCicle());
+            System.out.println(entrada.getData_ini());
             cs.setString(1,String.valueOf(entrada.getID()));
             cs.setString(2,entrada.getActe());
             cs.setString(3,entrada.getDescripcio());

@@ -55,8 +55,8 @@ public class Agenda {
     this.cicle = datos[17];
     this.descripcio_cicle = datos[18];
     if (datos[19].isEmpty()){
-    this.data_ini = "";
-    this.data_fi = "";
+    this.cicle_data_ini = null;
+    this.cicle_data_fi = null;
     }else{
     this.cicle_data_ini = datos[19];
     this.cicle_data_fi = datos[20];
