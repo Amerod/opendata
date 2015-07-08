@@ -88,7 +88,7 @@ public class AgendaDAO {
             Calendar calendar;
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             try{
-            File archivo = new File("src\\datos.csv");
+            File archivo = new File("datos.csv");
             long milliSeconds = archivo.lastModified();
             calendar = Calendar.getInstance();
             calendar.setTimeInMillis(milliSeconds);
@@ -105,7 +105,7 @@ public class AgendaDAO {
             boolean respuesta = false;
             
             try{
-                File archivo = new File("src\\datos.csv");
+                File archivo = new File("datos.csv");
                 URL url = new URL("http://terrassaopendata.blob.core.windows.net/opendata/2015_AGENDA_ACTIVITATS_CIUTAT_TERRASSA.csv");
                 URLConnection urlCon = url.openConnection();
                 //Pasar de milisegundos a fecha
@@ -125,7 +125,7 @@ public class AgendaDAO {
                 //comparamos si la fecha es la misma no descarga el nuevo archivo
                 if (!fechaViejo.equals(fechaNuevo)){
                     InputStream is = urlCon.getInputStream();
-                    FileOutputStream fos = new FileOutputStream("src\\datos.csv");
+                    FileOutputStream fos = new FileOutputStream("datos.csv");
                     byte [] array = new byte[1000];
                     int leido = is.read(array);
                     while (leido > 0) {
@@ -212,7 +212,7 @@ public class AgendaDAO {
         
         public void insertarTodo(){
         try{
-                File archivo = new File("src\\datos.csv");
+                File archivo = new File("datos.csv");
                 FileReader lee = new FileReader(archivo);
                 BufferedReader br = new BufferedReader (lee);
 

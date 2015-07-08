@@ -64,7 +64,7 @@ public class ControladorAgenda implements ActionListener{
         if (e.getSource()== vistaAgenda.btnConectar){
             if (!(vistaAgenda.txtUserDB.getText().isEmpty())&&!(vistaAgenda.txtNombreBase.getText().isEmpty())){
                 try{
-                        File datosDB = new File("src\\DatosDB.txt");
+                        File datosDB = new File("DatosDB.txt");
                         BufferedWriter bw;
                         bw = new BufferedWriter(new FileWriter(datosDB));
                         PrintWriter escribir = new PrintWriter(bw);//para crear el objeto que escribe en el archivo

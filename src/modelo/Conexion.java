@@ -17,7 +17,7 @@ public class Conexion {
     public Connection getConexion(){
                 Connection con = null;
         try{
-            File archivo = new File("src\\DatosDB.txt");
+            File archivo = new File("DatosDB.txt");
             FileReader lee = new FileReader(archivo);
             BufferedReader br = new BufferedReader(lee);
             String[] datos;
