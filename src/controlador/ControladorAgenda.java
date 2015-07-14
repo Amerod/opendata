@@ -68,7 +68,7 @@ public class ControladorAgenda implements ActionListener{
                         BufferedWriter bw;
                         bw = new BufferedWriter(new FileWriter(datosDB));
                         PrintWriter escribir = new PrintWriter(bw);//para crear el objeto que escribe en el archivo
-                        escribir.println(vistaAgenda.txtUserDB.getText()+","+vistaAgenda.txtPassDB.getText()+","+vistaAgenda.txtNombreBase.getText());//para escribir en el archivo
+                        escribir.println(vistaAgenda.txtUserDB.getText()+","+vistaAgenda.txtPassDB.getText()+","+vistaAgenda.txtNombreBase.getText()+","+vistaAgenda.txtDireccion.getText());//para escribir en el archivo
                         escribir.flush();
                         escribir.close();
                         bw.close();

@@ -24,7 +24,7 @@ public class Conexion {
             String linea = br.readLine();
             datos = linea.split(",");
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://localhost/"+datos[2],datos[0],datos[1]);
+            con = DriverManager.getConnection("jdbc:mysql://"+datos[3]+"/"+datos[2],datos[0],datos[1]);
         }
         catch(Exception e){
         
