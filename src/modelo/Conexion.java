@@ -27,7 +27,8 @@ public class Conexion {
             con = DriverManager.getConnection("jdbc:mysql://"+datos[3]+"/"+datos[2],datos[0],datos[1]);
         }
         catch(Exception e){
-        
+            System.out.println("No se pudo conectar");
+            e.printStackTrace();
         }
         return con;
     }

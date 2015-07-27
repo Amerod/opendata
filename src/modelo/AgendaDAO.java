@@ -142,53 +142,6 @@ public class AgendaDAO {
                 return respuesta;
         }
         
-        public String nuevaTabla(){
-        String rptaRegistro;
-        try{
-            Connection accesoDB = conexion.getConexion();
-            Statement ps = accesoDB.createStatement();
-            ps.executeUpdate("create table agenda("+
-            "ID int(8) PRIMARY KEY,"+
-            "acte varchar(200),"+
-            "descripcio varchar(200)," +
-            "email_acte varchar(100)," +
-            "web_acte varchar(100)," +
-            "a_carrec varchar(100)," +
-            "lloc varchar(100)," +
-            "data_ini DATETIME," +
-            "data_fi DATETIME," +
-            "gratuit boolean," +
-            "preu varchar(100)," +
-            "districte varchar(10)," +
-            "tipus_acte varchar(100)," +
-            "observacions varchar(200)," +
-            "cicle varchar(100)," +
-            "descripcio_cicle varchar(200)," +
-            "cicle_data_ini DATETIME," +
-            "cicle_data_fi DATETIME," +
-            "x real," +
-            "y real," +
-            "longitud real," +
-            "latitud real," +
-            "url varchar(100)" +
-            ");" +
-            "drop procedure if exists sp_insertAgenda;" +
-            "drop procedure if exists sp_insertID;" +
-            "drop procedure if exists sp_pasarDatos;" +
-            "delimiter xd " +
-            "	create procedure sp_insertAgenda(in id int(8),in acte varchar(200),in descripcio varchar(200),in web_acte varchar(100),in a_carrec varchar(100),in lloc varchar(100),in data_ini varchar(20),in data_fi varchar(20),in gratuito boolean,in preu varchar(100),in districte varchar(50),in tipus_acte varchar(100),in observacions varchar(200),in cicle varchar(100),in descripcio_cicle varchar(200),in cicle_data_ini DATETIME,in cicle_data_fi DATETIME,in x real,in y real,in longitud real,in latitud real,in url varchar(100))" +
-            "    begin" +
-            "		insert into agenda values(id,acte,descripcio,web_acte,a_carrec,lloc,data_ini,data_fi,gratuito,preu,districte,tipus_acte,observacions,cicle,descripcio_cicle,cicle_data_ini,cicle_data_fi,x,y,longitud,latitud,url);" +
-            "    end;" +
-            "xd" +
-            "delimiter ;");
-            rptaRegistro ="Se ha creado correctamente.";
-        }catch(Exception e){
-            rptaRegistro = "algo fue mal.";
-        }
-        return rptaRegistro;
-        }
-        
         public Agenda crear_entrada(BufferedReader br){
         String linea = "";
         String separador = ";";

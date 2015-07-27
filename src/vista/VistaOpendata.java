@@ -67,8 +67,11 @@ public class VistaOpendata extends javax.swing.JFrame {
 
         jLabel5.setText("Usuario");
 
+        txtUserDB.setText("root");
+
         jLabel4.setText("Contraseña");
 
+        txtPassDB.setText("123456");
         txtPassDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPassDBActionPerformed(evt);
@@ -97,6 +100,8 @@ public class VistaOpendata extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jLabel7.setText("Base de datos");
+
+        txtNombreBase.setText("db_agenda");
 
         btnConectar.setText("Conectar");
         btnConectar.addActionListener(new java.awt.event.ActionListener() {
