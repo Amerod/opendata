@@ -63,8 +63,8 @@ public class Agenda {
     };
     this.x = datos[22];
     this.y = datos[23];
-    this.longitud = datos[24];
-    this.latitud = datos[25];
+    this.longitud = datos[24].replace(",",".");
+    this.latitud = datos[25].replace(",",".");
     this.url = datos[26];
     }
 
