@@ -1,7 +1,7 @@
 # opendata
-Proyecto para opendata Terrassa
+Consumir datos de la api opendata Terrassa
 
-Proyecto para practicar Java utilizando el open data de terrassa.
+Proyecto para practicar Java utilizando la api de open data de terrassa.
 
 19/06/2015
 Pasa los datos del fichero .csv a la base de datos mysql correctamente.
